@@ -20,7 +20,7 @@ export const creaReceta = async (req, res)=>
 {
     try
     {
-        console.log(req.body);
+        //console.log(req.body);
         const recetaNueva = new Receta(req.body);
         await recetaNueva.save(); //Con save lo almaceno en la bd
         res.status(201).json({
@@ -52,6 +52,26 @@ export const borraReceta = async (req, res) =>
         console.log('A ocurrido un error al intentar comunicarse con la base de datos. Info de error: '+error);
         res.status(404).json({
             mensaje: 'Error al eliminar la receta con id "'+req.params.id+'" en la base de datos.'
+        });
+    }
+}
+
+export const editaReceta = async (req, res) => 
+{
+    try
+    {
+        //extraer el id del request y el body 
+        await Receta.findByIdAndUpdate(req.params.id, req.body); //El primer parametro sirve para ubicarlo por el id
+        //El segundo parametro como el req.body nos muestra el cuerpo como del objeto como lo debemos guardad en la bd
+        //sirve para guardarlo de esa manera en la bd.
+        res.status(200).json({
+            mensaje: 'La receta fue editada correctamente.'
+        });
+    }catch(error)
+    {
+        console.log('A ocurrido un error al intentar comunicarse con la base de datos. Info de error: '+error);
+        res.status(404).json({
+            mensaje: 'Error, la receta no pudo ser editada.'
         });
     }
 }
