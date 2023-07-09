@@ -15,6 +15,21 @@ export const obtenerRecetas = async (req, res)=>{
     }
 };
 
+export const obtenerReceta = async (req, res) =>
+{
+    try
+    {
+        const receta = await Receta.findById(req.params.id);
+        res.status(200).json(receta);
+    }catch(error)
+    {
+        console.log('A ocurrido un error al intentar comunicarse con la base de datos. Info de error: '+error);
+        res.status(400).json({
+            mensaje: 'Error al buscar la receta con id: '+req.params.id+' en la base de datos.'
+        });
+    }
+}
+
 //Controlador para crear recetas
 export const creaReceta = async (req, res)=>
 {
