@@ -1,6 +1,7 @@
 import { Router } from "express"; //MEtodo que contiene toda la logica necesaria para poder controlar las rutas.
 import { creaReceta, obtenerRecetas } from "../controlers/recetas.controllers";
 import { borraReceta } from "../controlers/recetas.controllers";
+import { editaReceta } from "../controlers/recetas.controllers";
 const router = Router();
 
 //Rutas (siempre van al final, luego de los middlewares y de todas las configuraciones previas que se deban hacer).
@@ -12,6 +13,8 @@ app.get('/prueba',(req, res)=>{
 router.route('/recetas')
     .get(obtenerRecetas) //Para obrener las recetas de la bd
     .post(creaReceta); //Para crear recetas en la bd
-router.route('/recetas/:id').delete(borraReceta); //Para borrar una receta usando el id de la misma.
+router.route('/recetas/:id')
+    .delete(borraReceta)  //Para borrar una receta usando el id de la misma.
+    .put(editaReceta); //Para editar una receta usando el id de la misma.
 
 export default router;
