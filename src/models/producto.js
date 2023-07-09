@@ -5,7 +5,7 @@ const recetaSchema = new Schema({ //En el objeto dentro de scheme debe tener las
     nombrePlatillo: {
         type: String,
         minLength: 2,
-        maxLength: 100,
+        maxLength: 200,
         required: true
     },
     descripcion: {

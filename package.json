@@ -1,7 +1,7 @@
 {
   "name": "cafecitoback",
   "version": "1.0.0",
-  "description": "Backend Cafecito",
+  "description": "Backend Recetas",
   "main": "index.js",
   "scripts": {
     "start": "babel-node index.js",
