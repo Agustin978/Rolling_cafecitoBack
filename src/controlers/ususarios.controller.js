@@ -90,6 +90,7 @@ export const login = async (req, res) =>
         console.log(email);
         console.log(password);
         let usuario = await Usuario.findOne({email:email});
+        //Si el usuario no existe
         if(!usuario)
         {
             return res.status(400).json({
@@ -97,7 +98,9 @@ export const login = async (req, res) =>
             });
         }
 
-        if(password != usuario.password)
+        const passwordEncriptada = bcrypt.compareSync(password, usuario.password); //Devolvera un booleano, si es valido devuelve true
+        //Si no es valido el password
+        if(!passwordEncriptada)
         {
             return res.status(400).json({
                 mensaje: 'Correo o password invalidos.'
