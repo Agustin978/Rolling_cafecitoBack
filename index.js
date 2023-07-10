@@ -4,6 +4,7 @@ import morgan from "morgan";
 import * as dotenv from "dotenv";
 import './src/dataBase/DBconnection';
 import recetasRoter from './src/routes/recetas.routes';
+import usuariosRouter from './src/routes/usuarios.routes';
 
 dotenv.config(); //Para poder leer variables de entorno
 //Debo configurar un puerto
@@ -21,3 +22,4 @@ app.use(morgan()); //Nos da info extra en la terminal
 
 //Rutas
 app.use('/apirecetas', recetasRoter);
+app.use('/apiusuarios', usuariosRouter);
