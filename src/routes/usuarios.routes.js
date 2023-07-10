@@ -45,7 +45,7 @@ router.route('/usuarios')
             .withMessage('El campo de contraseña debe tener como minimo 6 caracteres y como maximo 15 caracteres.')
     ],creaUsuario); //Para crear un nuevo usuario  
 */
-router.route('/usuarionuevo')
+router.route('/usuariosnuevo')
     .post([
         check("nombreUsuario")
             .notEmpty()
