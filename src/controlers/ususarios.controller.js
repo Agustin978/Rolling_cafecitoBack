@@ -37,6 +37,16 @@ export const creaUsuario = async (req, res) =>
 {
     try
     {
+        //debo controlar que el usuario no este ya ingresado.
+        const { email } = req.body;
+        let usuario = await Usuario.findOne({email: email});
+        if(usuario)
+        {
+            return res.status(400).json({
+                mensaje: 'El mail ingresado ya esta registrado.'
+            })
+        }
+
         const errors = validationResult(req);
         if(!errors.isEmpty())
         {
@@ -46,8 +56,10 @@ export const creaUsuario = async (req, res) =>
         }
         const usuarioNuevo = new Usuario(req.body);
         await usuarioNuevo.save();
-        res.status(200).json({
-            mensaje: 'El nuevo usuario fue almacenado exitosamente.'
+        res.status(201).json({
+            mensaje: 'El nuevo usuario fue almacenado exitosamente.',
+            nombre: usuarioNuevo.nombreUsuario,
+            uid: usuarioNuevo._id
         })
     }catch(error)
     {
