@@ -32,7 +32,7 @@ router.route('/recetas')
             .notEmpty()
             .withMessage('La imagen de la receta es un campo obligatorio.'),
         check("imagen")
-            .isURL()
+            .matches(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/)
             .withMessage('La URL proporcionada no es valida'),
         check("categoria").
             notEmpty().
