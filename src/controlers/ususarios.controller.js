@@ -106,7 +106,6 @@ export const login = async (req, res) =>
                 mensaje: 'Correo o password invalidos.'
             });
         }
-
         res.status(200).json({
             mensaje: 'El usuario existe.',
             uid: usuario._id,
