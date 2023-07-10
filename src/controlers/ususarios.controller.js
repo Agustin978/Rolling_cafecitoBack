@@ -1,5 +1,6 @@
 import { validationResult } from "express-validator";
 import Usuario from "../models/usuario";
+import bcrypt from 'bcrypt';
 
 //Controlador para buscar un usuario por su id
 export const obtieneUsuario = async (req, res) => 
@@ -38,8 +39,8 @@ export const creaUsuario = async (req, res) =>
     try
     {
         //debo controlar que el usuario no este ya ingresado.
-        const { email } = req.body;
-        const {nombreUsuario} = req.body;
+        const { email, password } = req.body;
+        const { nombreUsuario } = req.body;
         let usuario = await Usuario.findOne({email: email});
         let usuarioName = await Usuario.findOne({nombreUsuario: nombreUsuario});
         if(usuario)
@@ -62,6 +63,9 @@ export const creaUsuario = async (req, res) =>
             });
         }
         const usuarioNuevo = new Usuario(req.body);
+        //Aqui puedo modificar el usuario que se creara.
+        const salt = bcrypt.genSaltSync(10); //Numero de saltos del algoritmo para encriptar la contraseña. 10 es el estandar
+        usuarioNuevo.password = bcrypt.hashSync(password, salt);
         await usuarioNuevo.save();
         res.status(201).json({
             mensaje: 'El nuevo usuario fue almacenado exitosamente.',
@@ -82,7 +86,9 @@ export const login = async (req, res) =>
 {
     try
     {
-        const {email, password} = req.email;
+        const {email, password} = req.body;
+        console.log(email);
+        console.log(password);
         let usuario = await Usuario.findOne({email:email});
         if(!usuario)
         {

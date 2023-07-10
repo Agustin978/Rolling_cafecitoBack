@@ -18,7 +18,7 @@ const usuarioSchema = new Schema({
     password: {
         type: String,
         minLength: 6,
-        maxLength: 15,
+        maxLength: 100,
         required: true
     },
     type: {
