@@ -5,12 +5,14 @@ const usuarioSchema = new Schema({
         type: String,
         minLength: 4,
         maxLength: 14,
+        unique: true,
         required: true
     },
     email: {
         type: String,
         minLength: 8,
         maxLength: 40,
+        unique: true,
         required: true
     },
     password: {
