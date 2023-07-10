@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import Receta from "../models/producto"
 
 //Controlador para obtener recetas
@@ -36,6 +37,16 @@ export const creaReceta = async (req, res)=>
     try
     {
         //console.log(req.body);
+
+        //Trabajar con el resultado de la validacion
+        const errors = validationResult(req);
+        //errors.isEmpty(); devuelve true si es que no hay errores. False si hay algun error
+        if(!errors.isEmpty())
+        {
+            return res.status(400).json({
+                error: errors.array()
+            });
+        }
         const recetaNueva = new Receta(req.body);
         await recetaNueva.save(); //Con save lo almaceno en la bd
         res.status(201).json({
@@ -75,6 +86,13 @@ export const editaReceta = async (req, res) =>
 {
     try
     {
+        const errors = validationResult(req);
+        if(!errors.isEmpty())
+        {
+            return res.status(400).json({
+                error: errors.array()
+            });
+        }
         //extraer el id del request y el body 
         await Receta.findByIdAndUpdate(req.params.id, req.body); //El primer parametro sirve para ubicarlo por el id
         //El segundo parametro como el req.body nos muestra el cuerpo como del objeto como lo debemos guardad en la bd
