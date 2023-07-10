@@ -37,6 +37,8 @@ router.route('/recetas')
         check("categoria").
             notEmpty().
             withMessage('La categoria de una receta es obligatoria.')
+            .isIn(['Aperitivos', 'Panes y masas', 'Comida Argentina', 'Postres', 'Bebidas y tragos', 'Reposteria', 'Aves y carnes', 'Arroz, legumbres y pastas', 'Mariscos y pescados', 'Sopas y caldos'])
+            .withMessage('La categoria no se encuentra entre las categorias solicitadas. Intente nuevamente.')
     ],creaReceta); //Para crear rec etas enla bd
 
 
@@ -59,11 +61,13 @@ router.route('/recetas/:id')
             .notEmpty()
             .withMessage('La imagen de la receta es un campo obligatorio.'),
         check("imagen")
-            .isURL()
+            .matches(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/)
             .withMessage('La URL proporcionada no es valida'),
         check("categoria").
             notEmpty().
             withMessage('La categoria de una receta es obligatoria.')
+            .isIn(['Aperitivos', 'Panes y masas', 'Comida Argentina', 'Postres', 'Bebidas y tragos', 'Reposteria', 'Aves y carnes', 'Arroz, legumbres y pastas', 'Mariscos y pescados', 'Sopas y caldos'])
+            .withMessage('La categoria no se encuentra entre las categorias solicitadas. Intente nuevamente.')
     ],editaReceta) //Para editar una receta usando el id de la misma.
     .get(obtenerReceta); //Para obtener una receta en particular usando su id.
 
