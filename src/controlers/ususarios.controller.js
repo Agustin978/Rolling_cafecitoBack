@@ -39,11 +39,18 @@ export const creaUsuario = async (req, res) =>
     {
         //debo controlar que el usuario no este ya ingresado.
         const { email } = req.body;
+        const {nombreUsuario} = req.body;
         let usuario = await Usuario.findOne({email: email});
+        let usuarioName = await Usuario.findOne({nombreUsuario: nombreUsuario});
         if(usuario)
         {
             return res.status(400).json({
                 mensaje: 'El mail ingresado ya esta registrado.'
+            })
+        }else if(usuarioName)
+        {
+            return res.status(400).json({
+                mensaje: 'El nombre de usuario ingresado ya esta registrado.'
             })
         }
 
