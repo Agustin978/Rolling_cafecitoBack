@@ -76,3 +76,39 @@ export const creaUsuario = async (req, res) =>
         });
     }
 }
+
+//Funcion para loguear un usuario
+export const login = async (req, res) => 
+{
+    try
+    {
+        const {email, password} = req.email;
+        let usuario = await Usuario.findOne({email:email});
+        if(!usuario)
+        {
+            return res.status(400).json({
+                mensaje: 'Correo o password invalidos.'
+            });
+        }
+
+        if(password != usuario.password)
+        {
+            return res.status(400).json({
+                mensaje: 'Correo o password invalidos.'
+            });
+        }
+
+        res.status(200).json({
+            mensaje: 'El usuario existe.',
+            uid: usuario._id,
+            nombre: usuario.nombreUsuario,
+            tipo: usuario.type
+        })
+    }catch(error)
+    {
+        console.log('A ocurrido un error al intentar comunicarse con la base de datos. Info de error: '+error);
+        res.status(400).json({
+            mensaje: 'Error al intentar loguearse.'
+        });
+    }
+}
