@@ -111,7 +111,7 @@ export const login = async (req, res) =>
             mensaje: 'El usuario existe.',
             uid: usuario._id,
             nombre: usuario.nombreUsuario,
-            tipo: usuario.type
+            type: usuario.type
         })
     }catch(error)
     {
