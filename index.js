@@ -2,6 +2,9 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import * as dotenv from "dotenv";
+import './src/dataBase/DBconnection';
+import recetasRoter from './src/routes/recetas.routes';
+import usuariosRouter from './src/routes/usuarios.routes';
 
 dotenv.config(); //Para poder leer variables de entorno
 //Debo configurar un puerto
@@ -17,7 +20,6 @@ app.use(express.json()); //Permite interpretar el formato json
 app.use(express.urlencoded({extended: true})); //permite en el objeto request los strings y los arrays 
 app.use(morgan()); //Nos da info extra en la terminal
 
-//Rutas (siempre van al final, luego de los middlewares y de todas las configuraciones previas que se deban hacer).
-app.get('/prueba',(req, res)=>{
-    res.send('Esto es una prueba de la solicitud get a mi backend');
-});
+//Rutas
+app.use('/apirecetas', recetasRoter);
+app.use('/apiusuarios', usuariosRouter);
